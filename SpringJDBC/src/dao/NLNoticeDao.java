@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcDaoSupport;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -313,7 +314,7 @@ public class NLNoticeDao extends SimpleJdbcDaoSupport implements NoticeDao{
 
 
 
-	@Override
+	@Transactional(isolation=Isolation.READ_UNCOMMITTED)
 	public int getHit(String seq) {
 		String sql = "select hit from notices where seq=?";
 		

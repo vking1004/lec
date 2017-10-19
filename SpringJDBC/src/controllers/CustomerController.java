@@ -77,7 +77,27 @@ public class CustomerController {
 		
 		Notice notice = noticeDao.getNotice(seq);
 		
-		new Thread
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				noticeDao.getHit(seq);
+			}
+		}, "getHit Thread").start();
+		
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				noticeDao.hitUp(seq);
+			}
+		}, "hitUp Thread").start();
 		
 		
 		//ModelAndView mv = new ModelAndView("noticeDetail.jsp");
